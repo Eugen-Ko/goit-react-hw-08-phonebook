@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useDeleteContactMutation } from 'redux/contacts/contactsApi';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { Grid, Avatar, Box, Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { stringAvatar } from 'services/stringAvatar';
+import { ModalWindow } from 'components/ModalWindow/ModalWindow';
 
 export const ContactListItem = ({ id, name, number }) => {
   const [deleteContact, { isLoading }] = useDeleteContactMutation();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <Grid item xs={4} sm={4} md={4} lg={3}>
@@ -40,10 +40,7 @@ export const ContactListItem = ({ id, name, number }) => {
               variant="outlined"
               size="small"
               sx={{ marginRight: '10px' }}
-              onClick={() => {
-                navigate(`/edit/${id}`);
-                location.state = { id };
-              }}
+              onClick={() => setShowModal(true)}
             >
               Edit
             </Button>
@@ -63,6 +60,9 @@ export const ContactListItem = ({ id, name, number }) => {
           </Box>
         </Box>
       </Box>
+      {showModal && (
+        <ModalWindow showModal onClose={() => setShowModal(false)} id={id} />
+      )}
     </Grid>
   );
 };

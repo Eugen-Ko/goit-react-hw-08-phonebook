@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { useContactListHook } from 'hooks/hooks';
 import { TextField, Button, Box, Grid, Container } from '@mui/material';
 import AddIcCallIcon from '@mui/icons-material/AddIcCall';
 import { BallTriangle } from 'react-loader-spinner';
 
 import { ContactListItem } from 'components/ContactListItem/ContactListItem';
+import { ModalWindow } from 'components/ModalWindow/ModalWindow';
 
 export const ContactList = () => {
   const [filter, setFilter] = useState('');
-  const navigate = useNavigate();
   const { list, isFetching, isLoading } = useContactListHook(filter);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -20,7 +19,7 @@ export const ContactList = () => {
           variant="contained"
           size="small"
           sx={{ display: { xs: 'none', md: 'flex' } }}
-          onClick={() => navigate('/edit')}
+          onClick={() => setShowModal(true)}
         >
           Add contact...
         </Button>
@@ -34,7 +33,7 @@ export const ContactList = () => {
             right: '16px',
             display: { xs: 'flex', md: 'none' },
           }}
-          onClick={() => navigate('/edit')}
+          onClick={() => setShowModal(true)}
         >
           <AddIcCallIcon
             sx={{
@@ -68,6 +67,9 @@ export const ContactList = () => {
             ))}
           </Grid>
         </Container>
+      )}
+      {showModal && (
+        <ModalWindow showModal onClose={() => setShowModal(false)} id={null} />
       )}
     </>
   );

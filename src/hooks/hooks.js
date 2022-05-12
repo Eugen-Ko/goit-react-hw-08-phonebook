@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useFetchContactsQuery } from 'redux/contacts/contactsApi';
-import { useParams } from 'react-router-dom';
 //------------------------------------------------------------------
 
 export const useContactListHook = filter => {
@@ -19,10 +18,9 @@ export const useContactListHook = filter => {
 
 //-------------------------------------------------------------------
 
-export const useEditHook = () => {
-  let params = useParams();
+export const useEditHook = id => {
   const { data: contacts } = useFetchContactsQuery();
-  const fields = !params?.id
+  const fields = !id
     ? {
         title: `Add Contact : `,
         name: 'Sebastian Pereiro',
@@ -30,7 +28,7 @@ export const useEditHook = () => {
       }
     : {
         title: `Edit contact: `,
-        ...contacts.find(({ id }) => id === params.id),
+        ...contacts.find(contact => contact.id === id),
       };
-  return { fields, contacts, params };
+  return { fields, contacts };
 };

@@ -105,10 +105,10 @@ export const contactsApi = createApi({
       invalidatesTags: ['Contacts'],
     }),
     editContact: builder.mutation({
-      query: ({ id, name, namber }) => ({
+      query: ({ id, name, number }) => ({
         url: `/contacts/${id}`,
         method: 'PATCH',
-        body: { name, namber },
+        body: { name, number },
         validateStatus: response => {
           switch (response.status) {
             case 200:

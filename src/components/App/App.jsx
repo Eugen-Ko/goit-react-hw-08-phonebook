@@ -12,7 +12,6 @@ const HomePage = lazyLoadPage('HomePage');
 const RegisterPage = lazyLoadPage('RegisterPage');
 const LoginPage = lazyLoadPage('LoginPage');
 const ContactsPage = lazyLoadPage('ContactsPage');
-const EditPage = lazyLoadPage('EditPage');
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -38,14 +37,6 @@ export const App = () => {
                 <PrivateRoute redirectTo="/" component={<ContactsPage />} />
               }
             />
-            <Route
-              path="edit"
-              element={<PrivateRoute redirectTo="/" component={<EditPage />} />}
-            />
-            <Route
-              path="edit/:id"
-              element={<PrivateRoute redirectTo="/" component={<EditPage />} />}
-            ></Route>
             <Route
               path="register"
               element={<PublicRoute component={<RegisterPage />} restricted />}
